@@ -1357,7 +1357,12 @@ def version():
                     release_date = dt.strftime("%Y-%m-%d")
                 except Exception:
                     pass
-    except Exception:
+        else:
+            console.print(f"[yellow]Warning: Failed to fetch version info from {repo_owner}/{repo_name} (HTTP {response.status_code})[/yellow]")
+            console.print(f"[yellow]API URL: {api_url}[/yellow]")
+    except Exception as e:
+        console.print(f"[yellow]Warning: Exception while fetching version: {e}[/yellow]")
+        console.print(f"[yellow]API URL: {api_url}[/yellow]")
         pass
 
     info_table = Table(show_header=False, box=None, padding=(0, 2))
