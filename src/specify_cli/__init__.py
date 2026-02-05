@@ -1337,12 +1337,22 @@ def version():
     release_date = "unknown"
     
     try:
+        # Try without authentication first for public repositories
         response = client.get(
             api_url,
             timeout=10,
             follow_redirects=True,
-            headers=_github_auth_headers(),
         )
+        
+        # If that fails, try with authentication
+        if response.status_code != 200:
+            response = client.get(
+                api_url,
+                timeout=10,
+                follow_redirects=True,
+                headers=_github_auth_headers(),
+            )
+            
         if response.status_code == 200:
             release_data = response.json()
             template_version = release_data.get("tag_name", "unknown")
