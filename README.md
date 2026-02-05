@@ -134,7 +134,7 @@ uvx --from git+https://github.com/lizhouyang/spec-kit-trae.git specify check
 
 ## 🔧 Specify CLI 参考
 
-注：以下所有 `specify` 命令都可以通过 `uvx --from git+https://github.com/github/spec-kit.git` 前缀运行。
+注：以下所有 `specify` 命令都可以通过 `uvx --from git+https://github.com/lizhouyang/spec-kit-trae.git` 前缀运行。
 
 ### 命令
 
@@ -162,19 +162,19 @@ uvx --from git+https://github.com/lizhouyang/spec-kit-trae.git specify check
 
 ```bash
 # 基本项目初始化
-uvx --from git+https://github.com/github/spec-kit.git specify init my-project
+uvx --from git+https://github.com/lizhouyang/spec-kit-trae.git specify init my-project
 
 # 使用特定的 AI 助手进行初始化
-uvx --from git+https://github.com/github/spec-kit.git specify init my-project --ai claude
+uvx --from git+https://github.com/lizhouyang/spec-kit-trae.git specify init my-project --ai claude
 
 # 初始化并支持 Cursor
-uvx --from git+https://github.com/github/spec-kit.git specify init my-project --ai cursor-agent
+uvx --from git+https://github.com/lizhouyang/spec-kit-trae.git specify init my-project --ai cursor-agent
 
 # 初始化并支持 Qoder
-uvx --from git+https://github.com/github/spec-kit.git specify init my-project --ai qoder
+uvx --from git+https://github.com/lizhouyang/spec-kit-trae.git specify init my-project --ai qoder
 
 # 检查系统要求
-uvx --from git+https://github.com/github/spec-kit.git specify check
+uvx --from git+https://github.com/lizhouyang/spec-kit-trae.git specify check
 ```
 
 ### 可用斜杠命令
@@ -275,17 +275,17 @@ uvx --from git+https://github.com/github/spec-kit.git specify check
 你可以使用 Specify CLI 来引导你的项目，这会将所需的成果物带入你的环境。运行：
 
 ```bash
-uvx --from git+https://github.com/github/spec-kit.git specify init <project_name>
+uvx --from git+https://github.com/lizhouyang/spec-kit-trae.git specify init <project_name>
 ```
 
 或在当前目录初始化：
 
 ```bash
-uvx --from git+https://github.com/github/spec-kit.git specify init .
+uvx --from git+https://github.com/lizhouyang/spec-kit-trae.git specify init .
 # 或使用 --here 标志
-uvx --from git+https://github.com/github/spec-kit.git specify init --here
+uvx --from git+https://github.com/lizhouyang/spec-kit-trae.git specify init --here
 # 当目录非空时跳过确认
-uvx --from git+https://github.com/github/spec-kit.git specify init . --force
+uvx --from git+https://github.com/lizhouyang/spec-kit-trae.git specify init . --force
 ```
 
 ![Specify CLI 在终端中引导新项目](./media/specify_cli.gif)
@@ -293,7 +293,7 @@ uvx --from git+https://github.com/github/spec-kit.git specify init . --force
 系统会提示你选择正在使用的 AI 智能体。你也可以直接在终端中指定：
 
 ```bash
-uvx --from git+https://github.com/github/spec-kit.git specify init <project_name> --ai claude
+uvx --from git+https://github.com/lizhouyang/spec-kit-trae.git specify init <project_name> --ai claude
 ```
 
 CLI 会检查你是否安装了 Claude Code, Gemini CLI, Cursor CLI, Qwen CLI, opencode, Codex CLI, Qoder CLI 或 Amazon Q Developer CLI。如果你没有安装，或者更愿意在不检查工具的情况下获取模板，请在命令中使用 `--ignore-agent-tools`。
