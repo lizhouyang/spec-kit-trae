@@ -636,8 +636,9 @@ def merge_json_files(existing_path: Path, new_content: dict, verbose: bool = Fal
 
 def download_template_from_github(ai_assistant: str, download_dir: Path, *, script_type: str = "sh", verbose: bool = True, show_progress: bool = True, client: httpx.Client = None, debug: bool = False, github_token: str = None) -> Tuple[Path, dict]:
     # Allow override via environment variables for forked repositories
-    repo_owner = os.getenv("SPEC_KIT_REPO_OWNER", "github")
-    repo_name = os.getenv("SPEC_KIT_REPO_NAME", "spec-kit")
+    # Default to this fork repository
+    repo_owner = os.getenv("SPEC_KIT_REPO_OWNER", "lizhouyang")
+    repo_name = os.getenv("SPEC_KIT_REPO_NAME", "spec-kit-trae")
     if client is None:
         client = httpx.Client(verify=ssl_context)
 
