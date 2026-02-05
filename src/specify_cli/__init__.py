@@ -1329,8 +1329,8 @@ def version():
     
     # Fetch latest template release version
     # Allow override via environment variables for forked repositories
-    repo_owner = os.getenv("SPEC_KIT_REPO_OWNER", "github")
-    repo_name = os.getenv("SPEC_KIT_REPO_NAME", "spec-kit")
+    repo_owner = os.getenv("SPEC_KIT_REPO_OWNER", "lizhouyang")
+    repo_name = os.getenv("SPEC_KIT_REPO_NAME", "spec-kit-trae")
     api_url = f"https://api.github.com/repos/{repo_owner}/{repo_name}/releases/latest"
     
     template_version = "unknown"
