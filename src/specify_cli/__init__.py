@@ -657,19 +657,32 @@ def download_template_from_github(ai_assistant: str, download_dir: Path, *, scri
         if status != 200:
             # Check if this is a fork with no releases - provide helpful error
             if repo_owner != "github" or repo_name != "spec-kit":
-                console.print(f"[yellow]Warning:[/yellow] No releases found in {repo_owner}/{repo_name}")
-                console.print(f"[yellow]Falling back to github/spec-kit for templates[/yellow]")
-                # Fall back to original repository
-                repo_owner = "github"
-                repo_name = "spec-kit"
-                api_url = f"https://api.github.com/repos/{repo_owner}/{repo_name}/releases/latest"
-                response = client.get(
-                    api_url,
+                console.print(f"[yellow]DEBUG: Detected fork repository: {repo_owner}/{repo_name}[/yellow]")
+                console.print(f"[yellow]DEBUG: Attempting to fetch from fork first...[/yellow]")
+                # Try to fetch from fork repository first
+                fork_response = client.get(
+                    f"https://api.github.com/repos/{repo_owner}/{repo_name}/releases/latest",
                     timeout=30,
                     follow_redirects=True,
-                    headers=_github_auth_headers(github_token),
                 )
-                status = response.status_code
+                if fork_response.status_code == 200:
+                    console.print(f"[green]DEBUG: Successfully fetched from fork repository[/green]")
+                    response = fork_response
+                    status = 200
+                else:
+                    console.print(f"[yellow]Warning:[/yellow] No releases found in {repo_owner}/{repo_name} (HTTP {fork_response.status_code})")
+                    console.print(f"[yellow]Falling back to github/spec-kit for templates[/yellow]")
+                    # Fall back to original repository
+                    repo_owner = "github"
+                    repo_name = "spec-kit"
+                    api_url = f"https://api.github.com/repos/{repo_owner}/{repo_name}/releases/latest"
+                    response = client.get(
+                        api_url,
+                        timeout=30,
+                        follow_redirects=True,
+                        headers=_github_auth_headers(github_token),
+                    )
+                    status = response.status_code
                 if status != 200:
                     error_msg = _format_rate_limit_error(status, response.headers, api_url)
                     if debug:
