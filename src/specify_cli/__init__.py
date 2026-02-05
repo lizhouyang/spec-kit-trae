@@ -654,11 +654,31 @@ def download_template_from_github(ai_assistant: str, download_dir: Path, *, scri
         )
         status = response.status_code
         if status != 200:
-            # Format detailed error message with rate-limit info
-            error_msg = _format_rate_limit_error(status, response.headers, api_url)
-            if debug:
-                error_msg += f"\n\n[dim]Response body (truncated 500):[/dim]\n{response.text[:500]}"
-            raise RuntimeError(error_msg)
+            # Check if this is a fork with no releases - provide helpful error
+            if repo_owner != "github" or repo_name != "spec-kit":
+                console.print(f"[yellow]Warning:[/yellow] No releases found in {repo_owner}/{repo_name}")
+                console.print(f"[yellow]Falling back to github/spec-kit for templates[/yellow]")
+                # Fall back to original repository
+                repo_owner = "github"
+                repo_name = "spec-kit"
+                api_url = f"https://api.github.com/repos/{repo_owner}/{repo_name}/releases/latest"
+                response = client.get(
+                    api_url,
+                    timeout=30,
+                    follow_redirects=True,
+                    headers=_github_auth_headers(github_token),
+                )
+                status = response.status_code
+                if status != 200:
+                    error_msg = _format_rate_limit_error(status, response.headers, api_url)
+                    if debug:
+                        error_msg += f"\n\n[dim]Response body (truncated 500):[/dim]\n{response.text[:500]}"
+                    raise RuntimeError(error_msg)
+            else:
+                error_msg = _format_rate_limit_error(status, response.headers, api_url)
+                if debug:
+                    error_msg += f"\n\n[dim]Response body (truncated 500):[/dim]\n{response.text[:500]}"
+                raise RuntimeError(error_msg)
         try:
             release_data = response.json()
         except ValueError as je:
